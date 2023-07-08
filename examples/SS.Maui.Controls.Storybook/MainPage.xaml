@@ -5,14 +5,19 @@
              x:Class="SS.Maui.Controls.Storybook.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+        <Grid Padding="8"
+              ColumnDefinitions="*,*"
+              RowDefinitions="auto,auto">
 
-            <rating_input:RatingInput />
+            <Label Text="RatingInput"
+                   FontSize="Title"
+                   FontFamily="OpenSansBold"
+                   FontAttributes="Bold"
+                   Margin="0,0,0,8"/>
 
-        </VerticalStackLayout>
+            <rating_input:RatingInput Grid.Row="1"
+                                      CurrentRating="0" />
+        </Grid>
     </ScrollView>
 
 </ContentPage>
