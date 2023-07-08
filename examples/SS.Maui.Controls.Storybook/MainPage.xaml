@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:rating_input="clr-namespace:SS.Maui.Controls.RatingInput;assembly=SS.Maui.Controls.RatingInput"
+             x:Class="SS.Maui.Controls.Storybook.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <rating_input:RatingInput />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
