@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SS.Maui.Controls"
+             x:Class="SS.Maui.Controls.RatingInput"
+             x:DataType="{x:Type local:RatingInputViewModel}">
+
+        <StackLayout BindableLayout.ItemsSource="{Binding Stars}"
+                     Orientation="Horizontal"
+                     HorizontalOptions="FillAndExpand">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type local:Rating}">
+                <Image HeightRequest="30"
+                       WidthRequest="30"
+                       Source="star.png"
+                       HorizontalOptions="CenterAndExpand">
+                    <Image.Triggers>
+                        <DataTrigger TargetType="Image" Binding="{Binding IsRated}" Value="True">
+                            <Setter Property="Source" Value="star_filled.png" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Image" Binding="{Binding IsRated}" Value="False">
+                            <Setter Property="Source" Value="star_hollow.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding Source={RelativeSource AncestorType={x:Type local:RatingInputViewModel}}, Path=RatingChangedCommand}"
+                                              CommandParameter="{Binding}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+
+        
+</ContentView>
+
