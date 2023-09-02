@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using SS.Maui.Controls;
 
 namespace SS.Maui.Storybook.Features;
 
@@ -10,30 +11,24 @@ public class MainPageViewModel : INotifyPropertyChanged
 
   public MainPageViewModel()
   {
-    this.RatingChangedCommand = new Command(async () =>
+    this.RatingChangedCommand = new Command(async (object rating) =>
     {
-        var message = $"Rating updated to {this.CurrentRating}";
+      if (rating is not Rating)
+        await Application.Current.MainPage.DisplayAlert("Rating", "rating isn't of Rating type", "OK");
+      else
+      {
+        var message = $"Rating updated to {(rating as Rating).Value}";
         Debug.WriteLine(message);
         await Application.Current.MainPage.DisplayAlert("Rating", message, "OK");
+      }
     });
-  }
-
-  private int currentRating;
-  public int CurrentRating
-  {
-    get { return currentRating; }
-    set
-    {
-      currentRating = value;
-      OnPropertyChanged();
-    }
   }
 
   public Command RatingChangedCommand { get; set; }
 
   public event PropertyChangedEventHandler PropertyChanged;
 
-  private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+  private void onPropertyChanged([CallerMemberName] string propertyName = null)
 
   {
     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -17,9 +17,11 @@
                    FontAttributes="Bold"
                    Margin="0,0,0,8"/>
 
-            <ss:RatingInput Grid.Row="1"
-                            CurrentRating="{Binding CurrentRating}"
-                            RatingChangedCommand="{Binding RatingChangedCommand}"/>
+            <ss:RatingInput
+                x:Name="MyRatingInput"
+                Grid.Row="1"
+                RatingChangedCommand="{Binding RatingChangedCommand}"
+                 />
         </Grid>
     </ScrollView>
 

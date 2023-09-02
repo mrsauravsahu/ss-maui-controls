@@ -2,12 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SS.Maui.Controls"
-             x:Class="SS.Maui.Controls.RatingInput"
-             x:DataType="{x:Type local:RatingInputViewModel}">
+             x:Class="SS.Maui.Controls.RatingInput">
 
         <StackLayout BindableLayout.ItemsSource="{Binding Stars}"
                      Orientation="Horizontal"
-                     HorizontalOptions="FillAndExpand">
+                     HorizontalOptions="FillAndExpand"
+                     BindingContext="{Binding Source={RelativeSource AncestorType={x:Type local:RatingInput}}, Path=ViewModel}" 
+                     x:DataType="{x:Type local:RatingInputViewModel}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type local:Rating}">
                 <Image HeightRequest="30"

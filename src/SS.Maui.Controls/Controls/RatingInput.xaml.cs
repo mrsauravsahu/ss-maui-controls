@@ -4,42 +4,46 @@ namespace SS.Maui.Controls;
 
 public partial class RatingInput : ContentView
 {
-    private readonly RatingInputViewModel vm = new();
+    public RatingInputViewModel ViewModel { get; set; }
 
     public RatingInput()
     {
         InitializeComponent();
-        BindingContext = vm;
+        this.ViewModel = new RatingInputViewModel();
     }
 
     public static readonly BindableProperty CurrentRatingProperty =
         BindableProperty.Create(
-            nameof(CurrentRating),
+            "CurrentRating",
             typeof(int),
             typeof(RatingInput),
             0,
-            BindingMode.OneWay);
-
-        public int CurrentRating {
-            get => (int)GetValue(CurrentRatingProperty);
-            set => SetValue(CurrentRatingProperty, value);
-        }
+            propertyChanged: (BindableObject bindable, object oldValue, object newValue) =>
+            {
+                {
+                    if (bindable is RatingInput ratingInput)
+                    {
+                        ratingInput.ViewModel.CurrentRating = (int)newValue;
+                    }
+                }
+            });
 
     public static readonly BindableProperty RatingChangedCommandProperty =
         BindableProperty.Create(
-            nameof(RatingChangedCommand),
+            "RatingChangedCommand",
             typeof(ICommand),
             typeof(RatingInput),
             null,
             BindingMode.TwoWay,
-            propertyChanged: (b, _, value) =>
+            propertyChanged: (BindableObject bindable, object oldValue, object newValue) =>
             {
-                var vm = b.BindingContext as RatingInputViewModel;
-                vm.RatingChangedCommandFunc = value as ICommand;
+                {
+                    if (bindable is RatingInput ratingInput)
+                    {
+                        Console.WriteLine($"assigning EXternalRatingChangeCommand {newValue}");
+                        ratingInput.ViewModel.ExternalRatingChangedCommand = (ICommand)newValue;
+                    }
+                }
             });
 
-    public ICommand RatingChangedCommand {
-        get => (ICommand)GetValue(RatingChangedCommandProperty);
-        set => SetValue(RatingChangedCommandProperty, value);
-    }
 }

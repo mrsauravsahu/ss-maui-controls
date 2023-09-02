@@ -7,61 +7,62 @@ namespace SS.Maui.Controls;
 
 public partial class RatingInputViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
-private ObservableRangeCollection<Rating> stars;
 
-public ObservableRangeCollection<Rating> Stars
-{
-  get
+  private ObservableRangeCollection<Rating> stars;
+
+  public ObservableRangeCollection<Rating> Stars
   {
-    if (stars is not null) return stars;
+    get
+    {
+      if (stars is not null) return stars;
 
-    var starsList = Enumerable.Range(1, 5)
-                .Select(p => new Rating
-                {
-                  Value = p,
-                  IsRated = false
-                });
+      var starsList = Enumerable.Range(1, 5)
+                  .Select(p => new Rating
+                  {
+                    Value = p,
+                    IsRated = false
+                  });
 
-    stars = new();
-    stars.AddRange(starsList);
+      stars = new();
+      stars.AddRange(starsList);
 
-    return stars;
+      return stars;
+    }
   }
-}
 
-private int currentRating = 0;
-public int CurrentRating
-{
-  get => Stars.Count;
-  set
+  private int currentRating = 0;
+  public int CurrentRating
   {
-    if (value == currentRating) return;
+    get => Stars.Count;
+    set
+    {
+      if (value == currentRating) return;
 
-    var starsList = Enumerable.Range(1, 5)
-      .Select(p => new Rating
-      {
-        Value = p,
-        IsRated = (p <= value)
-      });
+      var starsList = Enumerable.Range(1, 5)
+        .Select(p => new Rating
+        {
+          Value = p,
+          IsRated = p <= value
+        });
 
-    currentRating = value;
+      currentRating = value;
 
-    Stars.Clear();
-    Stars.AddRange(starsList);
+      Stars.Clear();
+      Stars.AddRange(starsList);
 
-    OnPropertyChanged(nameof(Stars));
-    OnPropertyChanged(nameof(CurrentRating));
+      OnPropertyChanged(nameof(Stars));
+      OnPropertyChanged(nameof(CurrentRating));
+    }
   }
-}
 
-[ObservableProperty]
-private ICommand ratingChangedCommandFunc;
+  public ICommand ExternalRatingChangedCommand { get; set; }
 
-[RelayCommand]
-private void RatingChanged(Rating rating)
-{
-        this.CurrentRating = rating.Value;
-        RatingChangedCommandFunc.Execute(rating.Value);
-}
-    
+
+  [RelayCommand]
+  private void RatingChanged(Rating rating)
+  {
+    this.CurrentRating = rating.Value;
+    ExternalRatingChangedCommand?.Execute(rating);
+  }
+
 }
