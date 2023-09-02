@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ss="clr-namespace:SS.Maui.Controls;assembly=SS.Maui.Controls"
+             xmlns:local="clr-namespace:SS.Maui.Storybook.Features"
+             x:Class="SS.Maui.Storybook.Features.MainPage"
+             x:DataType="{x:Type local:MainPageViewModel}">
+
+    <ScrollView>
+        <Grid Padding="8"
+              ColumnDefinitions="*,*"
+              RowDefinitions="auto,auto">
+
+            <Label Text="RatingInput"
+                   FontSize="Title"
+                   FontFamily="OpenSansBold"
+                   FontAttributes="Bold"
+                   Margin="0,0,0,8"/>
+
+            <ss:RatingInput
+                x:Name="MyRatingInput"
+                Grid.Row="1"
+                RatingChangedCommand="{Binding RatingChangedCommand}"
+                 />
+        </Grid>
+    </ScrollView>
+
+</ContentPage>
